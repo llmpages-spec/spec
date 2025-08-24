@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LLM Pages Validator</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
+    textarea { width: 100%; height: 200px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    select, button { padding: 0.5rem; }
+    .row { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .ok { color: #116611; }
+    .err { color: #a01919; white-space: pre-wrap; }
+    pre { background: #f7f7f7; padding: 1rem; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>LLM Pages Validator</h1>
+  <p>Validate an LLM Page payload against bundled JSON Schemas (article, product, event, faq). Runs locally in your browser.</p>
+
+  <div class="row">
+    <label>Schema</label>
+    <select id="schemaSelect"></select>
+  </div>
+
+  <div class="row">
+    <label>JSON Payload</label>
+    <textarea id="payload"></textarea>
+  </div>
+
+  <div class="row">
+    <button id="validateBtn">Validate</button>
+  </div>
+
+  <div class="row">
+    <div id="result"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/ajv@8/dist/ajv7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ajv-formats@3/dist/ajv-formats.min.js"></script>
+  <script>
+    const schemas = {
+      article: 'schemas/llm-page-article.schema.json',
+      product: 'schemas/llm-page-product.schema.json',
+      event: 'schemas/llm-page-event.schema.json',
+      faq: 'schemas/llm-page-faq.schema.json',
+      howto: 'schemas/llm-page-howto.schema.json',
+      recipe: 'schemas/llm-page-recipe.schema.json',
+      job: 'schemas/llm-page-job.schema.json',
+      review: 'schemas/llm-page-review.schema.json'
+    };
+
+    const examples = {
+      article: 'examples/article.llmpage.json',
+      product: 'examples/product.llmpage.json',
+      event: 'examples/event.llmpage.json',
+      faq: 'examples/faq.llmpage.json',
+      howto: 'examples/howto.llmpage.json',
+      recipe: 'examples/recipe.llmpage.json',
+      job: 'examples/job.llmpage.json',
+      review: 'examples/review.llmpage.json'
+    };
+
+    const schemaSelect = document.getElementById('schemaSelect');
+    const payloadEl = document.getElementById('payload');
+    const resultEl = document.getElementById('result');
+    const btn = document.getElementById('validateBtn');
+
+    for (const key of Object.keys(schemas)) {
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = key;
+      schemaSelect.appendChild(opt);
+    }
+
+    schemaSelect.addEventListener('change', async () => {
+      const ex = await fetch(examples[schemaSelect.value]).then(r => r.text());
+      payloadEl.value = ex;
+      resultEl.textContent = '';
+    });
+
+    // Load default
+    schemaSelect.value = 'article';
+    schemaSelect.dispatchEvent(new Event('change'));
+
+    btn.addEventListener('click', async () => {
+      resultEl.textContent = 'Validating...';
+      try {
+        const ajv = new Ajv({ allErrors: true, strict: false, allowUnionTypes: true });
+        // @ts-ignore
+        addFormats(ajv);
+        const schema = await fetch(schemas[schemaSelect.value]).then(r => r.json());
+        const validate = ajv.compile(schema);
+        const data = JSON.parse(payloadEl.value);
+        const valid = validate(data);
+        if (valid) {
+          resultEl.innerHTML = '<p class="ok">OK: Payload is valid</p>';
+        } else {
+          const lines = (validate.errors || []).map(e => `${e.instancePath || '/'} ${e.message}`).join('\n');
+          resultEl.innerHTML = '<pre class="err">' + lines + '</pre>';
+        }
+      } catch (e) {
+        resultEl.innerHTML = '<pre class="err">' + (e && e.message ? e.message : String(e)) + '</pre>';
+      }
+    });
+  </script>
+</body>
+</html>
+

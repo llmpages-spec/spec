@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "type": "review",
+  "id": "https://example.com/reviews/acme-smartwidget-2",
+  "source_url": "https://example.com/reviews/acme-smartwidget-2",
+  "title": "Review: Acme SmartWidget 2",
+  "language": "en",
+  "summary": "A balanced review of the new SmartWidget 2.",
+  "tags": ["electronics", "review"],
+  "last_modified": "2025-08-24T13:10:00Z",
+  "content_version": "1.0.0",
+  "page_checksum": "reviewchecksum1234567890abcdefghijklmnopqrstuvwxyz==",
+  "license": "CC-BY-4.0",
+  "publisher": { "name": "Example Reviews", "url": "https://example.com" },
+  "content": {
+    "item": {
+      "id": "https://example.com/products/sku-ABC123",
+      "title": "Acme SmartWidget 2",
+      "url": "https://example.com/store/sku-ABC123",
+      "type": "product"
+    },
+    "rating": { "value": 4.5, "scale": 5 },
+    "body": "The SmartWidget 2 improves battery life...",
+    "author": { "name": "J. Doe", "url": "https://example.com/authors/jdoe" },
+    "published_at": "2025-08-23T14:00:00Z"
+  }
+}
+
