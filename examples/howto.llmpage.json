@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "type": "howto",
+  "id": "https://example.com/howto/install-llm-pages",
+  "source_url": "https://example.com/howto/install-llm-pages",
+  "title": "How to Implement LLM Pages",
+  "language": "en",
+  "summary": "Step-by-step guide to add LLM Pages to your site.",
+  "tags": ["howto", "implementation"],
+  "last_modified": "2025-08-24T12:30:00Z",
+  "content_version": "1.0.0",
+  "page_checksum": "abc123def456ghi789jkl012mno345pqr678stu90=",
+  "license": "CC-BY-4.0",
+  "publisher": { "name": "Example Docs", "url": "https://example.com" },
+  "content": {
+    "difficulty": "beginner",
+    "estimated_time_minutes": 45,
+    "tools": ["Text editor", "Terminal"],
+    "materials": ["Site source code", "Hosting account"],
+    "steps": [
+      { "title": "Add llms.txt", "instructions": "Create /.well-known/llms.txt and list endpoints." },
+      { "title": "Implement endpoint", "instructions": "Serve application/llmpage+json with ETag." }
+    ]
+  }
+}
+

@@ -1,0 +1,5 @@
+https://example.com/blog/llm-pages-blueprint/llm
+https://example.com/products/sku-ABC123/llm
+https://example.com/events/llm-summit-2025/llm
+https://example.com/help/llm-pages-faq/llm
+

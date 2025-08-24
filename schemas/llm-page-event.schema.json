@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/llm-page-event.schema.json",
+  "title": "LLM Page: Event",
+  "description": "Envelope and content schema for an LLM Page representing an event.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "type",
+    "id",
+    "source_url",
+    "title",
+    "language",
+    "summary",
+    "content",
+    "tags",
+    "last_modified",
+    "content_version",
+    "page_checksum",
+    "license",
+    "publisher"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "type": { "const": "event" },
+    "id": { "type": "string", "minLength": 1 },
+    "source_url": { "type": "string", "format": "uri" },
+    "title": { "type": "string", "minLength": 1 },
+    "language": { "type": "string" },
+    "summary": { "type": "string", "maxLength": 1000 },
+    "tags": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "last_modified": { "type": "string", "format": "date-time" },
+    "content_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "page_checksum": { "type": "string", "minLength": 44 },
+    "license": { "type": "string" },
+    "publisher": {
+      "type": "object",
+      "required": ["name", "url"],
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["signed", "method"],
+      "properties": {
+        "signed": { "type": "boolean" },
+        "method": { "type": "string", "enum": ["none", "jws", "dsse", "sigstore"] },
+        "signature": { "type": "string" }
+      },
+      "default": { "signed": false, "method": "none" }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rel", "href"],
+        "properties": {
+          "rel": { "type": "string" },
+          "href": { "type": "string", "format": "uri" },
+          "type": { "type": "string" }
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "required": [
+        "start",
+        "end",
+        "timezone",
+        "location",
+        "organizer"
+      ],
+      "properties": {
+        "start": { "type": "string", "format": "date-time" },
+        "end": { "type": "string", "format": "date-time" },
+        "timezone": { "type": "string" },
+        "location": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string" },
+            "address": { "type": "string" },
+            "lat": { "type": "number" },
+            "lng": { "type": "number" },
+            "url": { "type": "string", "format": "uri" }
+          }
+        },
+        "organizer": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string" },
+            "url": { "type": "string", "format": "uri" },
+            "email": { "type": "string", "format": "email" }
+          }
+        },
+        "speakers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string" },
+              "title": { "type": "string" },
+              "url": { "type": "string", "format": "uri" }
+            }
+          }
+        },
+        "capacity": { "type": "integer", "minimum": 0 },
+        "price": { "type": "number", "minimum": 0 },
+        "currency": { "type": "string", "minLength": 3, "maxLength": 3 },
+        "registration_url": { "type": "string", "format": "uri" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "description": { "type": "string" }
+      }
+    }
+  },
+  "additionalProperties": false
+}
+

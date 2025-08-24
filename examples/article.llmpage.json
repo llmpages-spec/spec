@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "type": "article",
+  "id": "https://example.com/articles/llm-pages-blueprint",
+  "source_url": "https://example.com/blog/llm-pages-blueprint",
+  "title": "LLM Pages: A Blueprint for the Next-Generation Web",
+  "language": "en",
+  "summary": "A proposal to pair human-facing pages with machine-optimized LLM Pages for clean, verifiable, low-cost AI consumption.",
+  "tags": ["llm", "ai", "web", "standards"],
+  "last_modified": "2025-08-24T10:30:00Z",
+  "content_version": "1.2.0",
+  "page_checksum": "u5c9m2x6H3mT0aKf6rW3nHqTzJm4b7s8Y2P0d1e3f4g=",
+  "license": "CC-BY-4.0",
+  "publisher": {
+    "name": "Example Publisher",
+    "url": "https://example.com"
+  },
+  "provenance": { "signed": false, "method": "none" },
+  "relationships": [
+    { "rel": "canonical", "href": "https://example.com/blog/llm-pages-blueprint" },
+    { "rel": "collection", "href": "https://example.com/blog/llm/" }
+  ],
+  "content": {
+    "subtitle": "Optimizing the web for a dual-layer ecosystem",
+    "authors": [ { "name": "A. Jurkovic", "url": "https://example.com/authors/jurkovic" } ],
+    "published_at": "2025-08-24T09:00:00Z",
+    "updated_at": "2025-08-24T10:30:00Z",
+    "reading_time_minutes": 12,
+    "categories": ["whitepaper", "architecture"],
+    "hero_image": { "url": "https://example.com/images/llm-pages-hero.png", "alt": "LLM Pages diagram" },
+    "sections": [
+      { "heading": "Executive Summary", "content": "LLM Pages propose..." },
+      { "heading": "Architecture", "content": "Dual-layer with SSG/SSR hybrid..." }
+    ],
+    "body": "# LLM Pages\n\nThis whitepaper proposes..."
+  }
+}
+
