@@ -26,15 +26,17 @@ async function main() {
   // Lazy import Ajv and ajv-formats, provide guidance if missing
   let Ajv, addFormats;
   try {
-    ({ default: Ajv } = await import('ajv'));
+    ({ default: Ajv } = await import('ajv/dist/2020.js'));
     ({ default: addFormats } = await import('ajv-formats'));
   } catch (e) {
-    console.error('Missing dependencies. Install with:');
-    console.error('  npm i ajv ajv-formats');
+    console.error('Failed to load Ajv dependencies:', e?.message || e);
+    console.error('Try installing with: npm i ajv ajv-formats');
     process.exit(2);
   }
 
-  const schemaPath = path.join(process.cwd(), 'schemas', `llm-page-${schemaKey}.schema.json`);
+  const schemaPath = schemaKey === 'package'
+    ? path.join(process.cwd(), 'schemas', `llm-site-package.schema.json`)
+    : path.join(process.cwd(), 'schemas', `llm-page-${schemaKey}.schema.json`);
   let schema;
   try {
     schema = JSON.parse(await fs.readFile(schemaPath, 'utf8'));

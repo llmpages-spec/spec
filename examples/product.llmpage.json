@@ -9,9 +9,11 @@
   "tags": ["electronics", "widget"],
   "last_modified": "2025-08-24T11:00:00Z",
   "content_version": "2.0.1",
-  "page_checksum": "z9c8b7a6T5s4r3q2p1o0n9m8l7k6j5i4h3g2f1e0d=",
+  "page_checksum": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
   "license": "CC-BY-4.0",
   "publisher": { "name": "Example Store", "url": "https://example.com" },
+  "dynamic_endpoint": "/live/products/sku-ABC123/llm",
+  "dynamic_data_url": "/api/products/sku-ABC123-live.llmpage.json",
   "content": {
     "sku": "ABC123",
     "gtin": "0012345678905",

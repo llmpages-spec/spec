@@ -63,6 +63,8 @@
         }
       }
     },
+    "dynamic_endpoint": { "type": "string", "description": "Optional absolute or relative URL to a live LLM Page endpoint." },
+    "dynamic_data_url": { "type": "string", "description": "Optional absolute or relative URL to live data for this page." },
     "content": {
       "type": "object",
       "required": ["questions"],
