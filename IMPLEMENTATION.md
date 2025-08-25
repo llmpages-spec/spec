@@ -1,4 +1,5 @@
-# Implementing LLM Pages
+# Implementing LLM Pages (v2.3)
+
 
 This guide shows how to expose machine-optimized LLM Pages alongside your human pages.
 
@@ -12,6 +13,76 @@ This guide shows how to expose machine-optimized LLM Pages alongside your human 
 https://example.com/blog/llm-pages-blueprint/llm
 https://example.com/blog/another-post/llm
 ```
+
+## 2) Delivery Profiles
+
+- Endpoint Profile (/llm/):
+  - Use routes that return application/llmpage+json; version=1
+  - Prefer for dynamic/real-time (SSR) or SSG in frameworks with route-first design
+- File Profile (.llm.json) [NEW in 2.2]:
+  - For static content, publish files like /path/page.llm.json
+  - Works on any static host/CDN; trivial caching with ETag/Last-Modified
+- Package Profile [Optional]:
+  - Provide a bundle file (e.g., /all-content.llm.json) listing embedded items or references
+  - Good for bulk ingestion and initial sync
+
+## 3) Discovery via llms.txt (updated)
+
+- Location: Prefer /.well-known/llms.txt
+- List absolute URLs to:
+  - Individual .llm.json files
+  - /llm/ endpoints
+  - Optional package file
+- Example:
+
+```
+https://example.com/blog/post-a.llm.json
+https://example.com/blog/post-b/llm/
+https://example.com/all-content.llm.json
+```
+
+## 4) HTTP semantics (normative)
+
+- Content-Type: application/llmpage+json; version=1
+- Caching: ETag + Last-Modified; support 304 with If-None-Match / If-Modified-Since
+- Prefer HEAD for freshness checks on hot endpoints
+- Compress JSON (gzip/brotli) where appropriate
+
+## 5) Hybrid for dynamic data
+
+- From a static page payload, optionally link live data:
+  - dynamic_endpoint: "/live/product-123/llm/"
+  - or dynamic_data_url: "/api/product-123-live.llmpage.json"
+- Semi-dynamic: Scheduled regeneration acceptable with documented TTLs
+- Edge: Route generation at CDN edges is acceptable for latency
+
+### Conditional request examples
+
+GET with If-None-Match:
+
+```
+GET /blog/static-blueprint.llm.json HTTP/1.1
+Host: example.com
+Accept: application/llmpage+json; version=1
+If-None-Match: "abc123"
+```
+
+HEAD for freshness check:
+
+```
+HEAD /blog/static-blueprint.llm.json HTTP/1.1
+Host: example.com
+Accept: application/llmpage+json; version=1
+```
+
+Server response (not modified):
+
+```
+HTTP/1.1 304 Not Modified
+ETag: "abc123"
+Cache-Control: public, max-age=300, stale-while-revalidate=60
+```
+
 
 - Caching: Serve with strong ETag and Cache-Control: max-age=300, stale-while-revalidate=60.
 - Robots: Respect robots.txt; llms.txt does not override disallow rules.
@@ -114,6 +185,18 @@ An example discovery file lives at /.well-known/llms.txt with sample LLM endpoin
 - llm-pages-review.md — Rationale, diagrams, and spec suggestions
 
 ## 9) FAQ
+
+### Conformance Levels
+- Level 1 (Static):
+  - Provide valid LLM Pages via /llm/ static route or .llm.json files
+  - Implement ETag + Last-Modified + Cache-Control; list in llms.txt
+- Level 2 (Hybrid):
+  - Level 1 plus dynamic patterns (SSR endpoint and/or dynamic_endpoint fields)
+  - Support HEAD for freshness checks on hot endpoints
+- Level 3 (Dynamic):
+  - Level 2 plus documented freshness targets (SLA), robust conditional requests, and monitoring
+
+
 
 - Why not just JSON-LD? JSON-LD remains valuable, but LLM Pages add enforced validation, versioning, caching semantics, and payload completeness at a dedicated endpoint without front-end coupling.
 - Where should llms.txt live? Prefer /.well-known/llms.txt at the site root.

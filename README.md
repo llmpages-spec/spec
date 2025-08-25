@@ -1,10 +1,14 @@
 ### **LLM Pages: A Blueprint for the Next-Generation Web**
 
+Note: See CHANGELOG.md for version history.
+
 **An Enhanced Whitepaper on Optimizing the Web for a Dual-Layer Ecosystem**
 
 **Original Concept:** A. Jurkovic
-**Version:** 2.1
+**Version:** 2.3
 **Date:** August 24, 2025
+
+[![Validate Examples](https://github.com/llmpages-spec/spec/actions/workflows/validate-llm-pages.yml/badge.svg)](https://github.com/llmpages-spec/spec/actions/workflows/validate-llm-pages.yml)
 
 ---
 
@@ -105,6 +109,11 @@ A phased approach is recommended to move the LLM Pages model from concept to ind
 
 ### **8. Conclusion: A Blueprint for a Symbiotic Web**
 
+### **FAQ: How is this different from AMP?**
+- Audience: AMP optimizes HTML for human mobile users; LLM Pages optimizes JSON for AI.
+- Format: AMP uses constrained HTML; LLM Pages uses JSON validated by JSON Schema.
+- Automation: LLM Pages has no visual fidelity requirement, enabling stronger set-and-forget automation.
+- Governance: LLM Pages aims for neutral, open governance and interoperability.
 
 ---
 

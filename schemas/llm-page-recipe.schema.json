@@ -18,6 +18,8 @@
     "page_checksum": { "type": "string", "minLength": 44 },
     "license": { "type": "string" },
     "publisher": { "type": "object", "required": ["name", "url"], "properties": { "name": { "type": "string" }, "url": { "type": "string", "format": "uri" } } },
+    "dynamic_endpoint": { "type": "string", "description": "Optional absolute or relative URL to a live LLM Page endpoint." },
+    "dynamic_data_url": { "type": "string", "description": "Optional absolute or relative URL to live data for this page." },
     "content": {
       "type": "object",
       "required": ["ingredients","steps","yield"],
