@@ -9,10 +9,18 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 async function main() {
-  const args = Object.fromEntries(process.argv.slice(2).map((a) => {
-    const [k, v] = a.startsWith('--') ? a.replace(/^--/, '').split('=') : ['file', a];
-    return [k, v ?? true];
-  }));
+  const args = Object.fromEntries(process.argv.slice(2).flatMap(a=>{
+  if(a.startsWith('--')){const [k,v]=a.slice(2).split('=');return [[k,v??true]];}
+  return [['file',a]];
+}));
+if (args.schema === true) args.schema = 'article';
+if (args.file === true) { console.error('Error: --file requires a value'); process.exit(2); }
+  // Normalize truthy flags: support --schema product --file path as well
+  if (args.schema === true) args.schema = 'article';
+  if (args.file === true) {
+    console.error('Error: --file requires a value');
+    process.exit(2);
+  }
 
   const schemaKey = args.schema || 'article';
   const filePath = args.file || args._ || null;
