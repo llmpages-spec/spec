@@ -19,11 +19,11 @@ jobs:
         run: |
           for f in examples/*.llmpage.json; do
             echo "Validating $f";
-            node tools/validate.mjs --schema $(basename "$f" | sed -E 's/\.llmpage\.json$//' | sed -E 's/^(article|product|event|faq|howto|recipe|job|review).*/\1/') --file "$f" || exit 1;
+            node tools/validate.mjs --schema=$(basename "$f" | sed -E 's/\.llmpage\.json$//' | sed -E 's/^(article|product|event|faq|howto|recipe|job|review).*/\1/') --file="$f" || exit 1;
           done
       - name: Validate package example
         run: |
           if [ -f examples/site-llm-package.json ]; then
-            node tools/validate.mjs --schema package --file examples/site-llm-package.json || exit 1;
+            node tools/validate.mjs --schema=package --file=examples/site-llm-package.json || exit 1;
           fi
 
