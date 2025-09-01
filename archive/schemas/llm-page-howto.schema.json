@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/llm-page-howto.schema.json",
+  "title": "LLM Page: HowTo",
+  "type": "object",
+  "required": ["schema_version","type","id","source_url","title","language","summary","content","tags","last_modified","content_version","page_checksum","license","publisher"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "type": { "const": "howto" },
+    "id": { "type": "string" },
+    "source_url": { "type": "string", "format": "uri" },
+    "title": { "type": "string" },
+    "language": { "type": "string" },
+    "summary": { "type": "string", "maxLength": 1000 },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "last_modified": { "type": "string", "format": "date-time" },
+    "content_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "page_checksum": { "type": "string", "minLength": 44 },
+    "license": { "type": "string" },
+    "publisher": { "type": "object", "required": ["name", "url"], "properties": { "name": { "type": "string" }, "url": { "type": "string", "format": "uri" } } },
+    "dynamic_endpoint": { "type": "string", "description": "Optional absolute or relative URL to a live LLM Page endpoint." },
+    "dynamic_data_url": { "type": "string", "description": "Optional absolute or relative URL to live data for this page." },
+    "content": {
+      "type": "object",
+      "required": ["estimated_time_minutes","tools","materials","steps"],
+      "properties": {
+        "difficulty": { "type": "string", "enum": ["beginner","intermediate","advanced"] },
+        "estimated_time_minutes": { "type": "integer", "minimum": 0 },
+        "tools": { "type": "array", "items": { "type": "string" } },
+        "materials": { "type": "array", "items": { "type": "string" } },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["title","instructions"],
+            "properties": {
+              "title": { "type": "string" },
+              "instructions": { "type": "string" },
+              "image": { "type": "string", "format": "uri" },
+              "duration_minutes": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
+

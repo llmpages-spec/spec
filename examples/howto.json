@@ -1,0 +1,44 @@
+{
+  "specVersion": "1.0.0",
+  "url": "https://example.com/guides/change-bike-tire/",
+  "title": "How to Change a Bike Tire",
+  "content": "Step-by-step instructions to replace a bike tire...",
+  "dateModified": "2025-08-30T10:30:00Z",
+  "language": "en-US",
+  "type": "howto",
+  "totalTime": "PT30M",
+  "estimatedCost": {
+    "value": 12.5,
+    "currency": "USD"
+  },
+  "supplies": [
+    "Spare tube",
+    "Patch kit"
+  ],
+  "tools": [
+    "Tire levers",
+    "Bicycle pump"
+  ],
+  "steps": [
+    {
+      "name": "Remove wheel",
+      "text": "Open quick-release and remove the wheel."
+    },
+    {
+      "name": "Lever the tire",
+      "text": "Insert tire levers to unseat the bead.",
+      "image": {
+        "url": "https://example.com/images/lever.jpg",
+        "alt": "Step illustration"
+      }
+    },
+    {
+      "name": "Replace tube",
+      "text": "Remove old tube, insert new tube slightly inflated."
+    },
+    {
+      "name": "Reseat & inflate",
+      "text": "Reseat bead evenly and inflate to PSI spec."
+    }
+  ]
+}

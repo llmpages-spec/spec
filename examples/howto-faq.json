@@ -1,0 +1,60 @@
+{
+  "specVersion": "1.0.0",
+  "type": "howto_faq",
+  "url": "https://example.com/guides/replace-faucet/",
+  "title": "How to Replace a Kitchen Faucet (with FAQ)",
+  "content": "Full instructions plus answers to common questions...",
+  "dateModified": "2025-08-30T10:30:00Z",
+  "language": "en-US",
+  "totalTime": "PT1H",
+  "estimatedCost": {
+    "value": 45.0,
+    "currency": "USD"
+  },
+  "supplies": [
+    "Plumber's tape",
+    "New faucet"
+  ],
+  "tools": [
+    "Adjustable wrench",
+    "Basin wrench"
+  ],
+  "steps": [
+    {
+      "name": "Shut off water",
+      "text": "Turn off water supply valves under the sink.",
+      "image": {
+        "url": "https://example.com/images/step1.jpg",
+        "alt": "Step image",
+        "width": 1024,
+        "height": 768
+      }
+    },
+    {
+      "name": "Disconnect lines",
+      "text": "Use wrench to disconnect supply lines."
+    },
+    {
+      "name": "Remove old faucet",
+      "text": "Loosen mounting nuts and lift out the faucet."
+    },
+    {
+      "name": "Install new faucet",
+      "text": "Seat gasket, tighten nuts, and connect lines."
+    },
+    {
+      "name": "Test",
+      "text": "Turn water on and check for leaks."
+    }
+  ],
+  "questions": [
+    {
+      "question": "Do I need plumber's putty?",
+      "answer": "Many modern faucets include a gasket; check manufacturer guidance."
+    },
+    {
+      "question": "What if the supply lines don't match?",
+      "answer": "Use appropriate adapters or replace lines to match faucet threads."
+    }
+  ]
+}

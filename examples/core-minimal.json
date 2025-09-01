@@ -1,0 +1,46 @@
+{
+  "specVersion": "1.0.0",
+  "url": "https://example.com/blog/post-title/",
+  "title": "Complete Guide to Web Optimization",
+  "content": "Full textual content of the page...",
+  "dateModified": "2025-08-30T10:30:00Z",
+  "language": "en-US",
+  "datePublished": "2025-08-28T09:00:00Z",
+  "author": {
+    "name": "Jane Smith",
+    "url": "https://example.com/authors/jane-smith/"
+  },
+  "excerpt": "Brief summary of the content",
+  "wordCount": 1500,
+  "categories": [
+    "Web Development",
+    "Performance"
+  ],
+  "tags": [
+    "optimization",
+    "speed",
+    "efficiency"
+  ],
+  "media": [
+    {
+      "type": "image",
+      "url": "https://example.com/image.jpg",
+      "alt": "Alt text",
+      "width": 800,
+      "height": 600
+    },
+    {
+      "type": "video",
+      "url": "https://example.com/video.mp4",
+      "transcript": "Transcript...",
+      "duration": 180
+    }
+  ],
+  "alternateLanguagePages": [
+    {
+      "lang": "es-ES",
+      "url": "https://example.com/es/blog/post-title/llm/"
+    }
+  ],
+  "sourceContentHash": "sha256-3q2+7w=="
+}

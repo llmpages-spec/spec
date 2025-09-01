@@ -1,0 +1,44 @@
+{
+  "specVersion": "1.0.0",
+  "url": "https://example.com/store/widget-3000/",
+  "title": "Widget 3000 \u2014 Ultra Compact",
+  "content": "Widget 3000 is a compact, durable gadget...",
+  "dateModified": "2025-08-30T10:30:00Z",
+  "language": "en-US",
+  "type": "product",
+  "brand": "Acme",
+  "model": "W3000",
+  "sku": "ACME-W3000",
+  "gtin": "00012345600012",
+  "mpn": "W3000-AC",
+  "aggregateRating": {
+    "ratingValue": 4.6,
+    "reviewCount": 182
+  },
+  "offers": [
+    {
+      "price": 99.99,
+      "priceCurrency": "USD",
+      "availability": "InStock",
+      "url": "https://example.com/store/widget-3000/"
+    },
+    {
+      "price": 109.99,
+      "priceCurrency": "EUR",
+      "availability": "InStock"
+    }
+  ],
+  "specs": {
+    "weight": "200g",
+    "battery": "3000mAh"
+  },
+  "media": [
+    {
+      "type": "image",
+      "url": "https://example.com/images/widget.jpg",
+      "alt": "Widget front",
+      "width": 1200,
+      "height": 800
+    }
+  ]
+}

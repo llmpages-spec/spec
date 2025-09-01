@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/llm-page-job.schema.json",
+  "title": "LLM Page: Job",
+  "type": "object",
+  "required": ["schema_version","type","id","source_url","title","language","summary","content","tags","last_modified","content_version","page_checksum","license","publisher"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "type": { "const": "job" },
+    "id": { "type": "string" },
+    "source_url": { "type": "string", "format": "uri" },
+    "title": { "type": "string" },
+    "language": { "type": "string" },
+    "summary": { "type": "string", "maxLength": 1000 },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "last_modified": { "type": "string", "format": "date-time" },
+    "content_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "page_checksum": { "type": "string", "minLength": 44 },
+    "license": { "type": "string" },
+    "publisher": { "type": "object", "required": ["name", "url"], "properties": { "name": { "type": "string" }, "url": { "type": "string", "format": "uri" } } },
+    "dynamic_endpoint": { "type": "string", "description": "Optional absolute or relative URL to a live LLM Page endpoint." },
+    "dynamic_data_url": { "type": "string", "description": "Optional absolute or relative URL to live data for this page." },
+    "content": {
+      "type": "object",
+      "required": ["company","location","employment_type","salary","currency","apply_url","description"],
+      "properties": {
+        "company": { "type": "string" },
+        "location": { "type": "string" },
+        "remote": { "type": "boolean" },
+        "employment_type": { "type": "string", "enum": ["full_time","part_time","contract","internship","temporary"] },
+        "salary": { "type": "object", "required": ["min","max"], "properties": { "min": { "type": "number", "minimum": 0 }, "max": { "type": "number", "minimum": 0 } } },
+        "currency": { "type": "string", "minLength": 3, "maxLength": 3 },
+        "equity": { "type": "boolean" },
+        "experience_level": { "type": "string", "enum": ["junior","mid","senior","lead","principal"] },
+        "description": { "type": "string" },
+        "requirements": { "type": "array", "items": { "type": "string" } },
+        "nice_to_have": { "type": "array", "items": { "type": "string" } },
+        "apply_url": { "type": "string", "format": "uri" }
+      }
+    }
+  },
+  "additionalProperties": false
+}
+
