@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://llmpages.org/schemas/llm-page-howto.schema.json#v1.0.0",
-  "title": "LLM Page \u2014 HowTo v1.0.0",
+  "$id": "https://llmpages.org/schemas/llm-page-howto-faq.schema.json#v1.0.0",
+  "title": "LLM Page \u2014 HowTo+FAQ Combined v1.0.0",
   "allOf": [
     {
       "$ref": "https://llmpages.org/schemas/llm-page-core.schema.json#v1.0.0"
@@ -11,7 +11,7 @@
       "additionalProperties": true,
       "properties": {
         "type": {
-          "const": "howto"
+          "const": "howto_faq"
         },
         "totalTime": {
           "type": "string",
@@ -101,10 +101,33 @@
               "text"
             ]
           }
+        },
+        "questions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "question": {
+                "type": "string",
+                "minLength": 1
+              },
+              "answer": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "question",
+              "answer"
+            ]
+          }
         }
       },
       "required": [
-        "steps"
+        "steps",
+        "questions"
       ]
     }
   ]

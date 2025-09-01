@@ -1,9 +1,18 @@
+
 name: Validate LLM Pages Examples
 
 on:
   push:
-    branches: ["**"]
+    paths:
+      - 'schemas/**'
+      - 'examples/**'
+      - 'package.json'
+      - '.github/workflows/validate-llm-pages.yml'
   pull_request:
+    paths:
+      - 'schemas/**'
+      - 'examples/**'
+      - 'package.json'
 
 jobs:
   validate:
@@ -13,17 +22,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install validator deps
-        run: npm i ajv ajv-formats
-      - name: Validate LLM Page examples
-        run: |
-          for f in examples/*.llmpage.json; do
-            echo "Validating $f";
-            node tools/validate.mjs --schema=$(basename "$f" | sed -E 's/\.llmpage\.json$//' | sed -E 's/^(article|product|event|faq|howto|recipe|job|review).*/\1/') --file="$f" || exit 1;
-          done
-      - name: Validate package example
-        run: |
-          if [ -f examples/site-llm-package.json ]; then
-            node tools/validate.mjs --schema=package --file=examples/site-llm-package.json || exit 1;
-          fi
-
+      - run: npm ci || npm i
+      - run: npm run validate
