@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://llmpages.org/schemas/llm-page-product.schema.json#v1.0.0",
+  "title": "LLM Page \u2014 Product v1.0.0",
+  "allOf": [
+    {
+      "$ref": "https://llmpages.org/schemas/llm-page-core.schema.json#v1.0.0"
+    },
+    {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "const": "product"
+        },
+        "sku": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "gtin": {
+          "type": "string"
+        },
+        "mpn": {
+          "type": "string"
+        },
+        "aggregateRating": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ratingValue": {
+              "type": "number",
+              "minimum": 0
+            },
+            "reviewCount": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "offers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "price": {
+                "type": "number",
+                "minimum": 0
+              },
+              "priceCurrency": {
+                "type": "string",
+                "pattern": "^[A-Z]{3}$",
+                "description": "ISO 4217 currency code (e.g., USD, EUR)."
+              },
+              "availability": {
+                "type": "string",
+                "enum": [
+                  "InStock",
+                  "OutOfStock",
+                  "PreOrder",
+                  "BackOrder",
+                  "Discontinued",
+                  "LimitedAvailability",
+                  "SoldOut"
+                ],
+                "description": "Product availability status."
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "price",
+              "priceCurrency"
+            ]
+          }
+        },
+        "specs": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Key-value technical specifications"
+        }
+      }
+    }
+  ]
+}

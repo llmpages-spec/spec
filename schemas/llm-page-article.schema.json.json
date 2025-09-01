@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://llmpages.org/schemas/llm-page-article.schema.json#v1.0.0",
+  "title": "LLM Page \u2014 Article v1.0.0",
+  "allOf": [
+    {
+      "$ref": "https://llmpages.org/schemas/llm-page-core.schema.json#v1.0.0"
+    },
+    {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "const": "article"
+        },
+        "readingTimeMinutes": {
+          "type": "number",
+          "minimum": 0
+        },
+        "section": {
+          "type": "string"
+        },
+        "series": {
+          "type": "string"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  ]
+}

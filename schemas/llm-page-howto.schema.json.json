@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://llmpages.org/schemas/llm-page-howto.schema.json#v1.0.0",
+  "title": "LLM Page \u2014 HowTo v1.0.0",
+  "allOf": [
+    {
+      "$ref": "https://llmpages.org/schemas/llm-page-core.schema.json#v1.0.0"
+    },
+    {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "const": "howto"
+        },
+        "totalTime": {
+          "type": "string",
+          "description": "ISO 8601 duration e.g. PT30M"
+        },
+        "estimatedCost": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "type": "number",
+              "minimum": 0
+            },
+            "currency": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "supplies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              },
+              "image": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "alt": {
+                        "type": "string"
+                      },
+                      "caption": {
+                        "type": "string"
+                      },
+                      "width": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "height": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    },
+                    "required": [
+                      "url"
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "text"
+            ]
+          }
+        }
+      },
+      "required": [
+        "steps"
+      ]
+    }
+  ]
+}
