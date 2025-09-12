@@ -69,6 +69,24 @@ Servers MAY also serve LLM content at the canonical URL via `Accept` negotiation
 
 Both patterns are valid. If both are provided, they MUST be **content-identical**.
 
+### 4.3 Negotiation Semantics (Normative)
+
+When a client requests the canonical human URL with `Accept: application/llmpage+json`:
+
+- If a valid LLM representation exists, respond `200 OK` with `Content-Type: application/llmpage+json; charset=utf-8` and include `Vary: Accept` and `Link: <{canonical-human-url}>; rel="canonical"`.
+- If no LLM representation exists for the page, respond `406 Not Acceptable` (preferred) or `404 Not Found`. Include `Vary: Accept`. Servers MAY return a small diagnostic JSON body for `406`.
+
+For the explicit `/llm/` endpoint:
+
+- If a valid LLM representation exists, respond `200 OK` with `Content-Type: application/llmpage+json; charset=utf-8` regardless of `Accept`.
+- If no LLM representation exists for the page, respond `404 Not Found`.
+
+Additional guidance:
+
+- Always include `Vary: Accept` when content negotiation is supported at the canonical human URL.
+- If multiple acceptable media types are listed, apply standard HTTP content negotiation with quality values (`q`) and prefer `application/llmpage+json` when it is highest-ranked.
+- The `/llm/` and `Accept`-negotiated responses MUST be content-identical for the same resource version.
+
 ---
 
 ## 5. HTTP Semantics
@@ -122,6 +140,9 @@ Exclude navigation, ads, cookie prompts, social share UIs, purely decorative ele
 ### 6.3 Internationalization
 - Use **BCP 47** language tags (e.g., `en-US`).  
 - Provide `alternateLanguagePages` to link localized equivalents.
+
+### 6.4 Content Normalization (Normative)
+LLM Pages MUST expose the same informational content as the human page using a deterministic normalization pipeline. The normalized text becomes the `content` field and is the input to `sourceContentHash`. See §15 for the normative normalization profile.
 
 ---
 
@@ -183,6 +204,11 @@ Exclude navigation, ads, cookie prompts, social share UIs, purely decorative ele
 > `sourceContentHash` is a **drift-detection** aid: compute a hash of the human page’s normalized text. Agents can check for divergence without re-scraping HTML.
 
 ---
+
+### 7.3 Normalization & Hashing (Normative)
+
+- The `content` field MUST be produced by the normalization pipeline in §15.
+- `sourceContentHash` MUST be `sha256-` + Base64(SHA-256(bytes_of_normalized_content)).
 
 ## 8. Validation & Conformance
 
@@ -259,6 +285,46 @@ A conformance harness SHOULD validate:
   - https://ca.finance.yahoo.com/news/bots-now-majority-internet-traffic-101810746.html  
 - Imperva blog summary (trend details): https://www.imperva.com/blog/2025-imperva-bad-bot-report-how-ai-is-supercharging-the-bot-threat/  
 - Cloudflare (crawler growth context): https://blog.cloudflare.com/from-googlebot-to-gptbot-whos-crawling-your-site-in-2025/
+
+---
+
+## 15. Normalization Profile v1 (Normative)
+
+This profile defines the required pipeline to extract and normalize human-page content into the `content` field and to compute `sourceContentHash`. Implementations MAY add site-specific heuristics, but MUST satisfy the requirements below.
+
+15.1 Scope and Inputs
+- Input: Rendered HTML of the canonical human page (post-SSR/SSG). Client-side dynamic content MAY be included if it is intended as stable informational content.
+- Output: UTF-8 text string that captures the meaningful informational content only.
+
+15.2 Inclusion Rules (MUST)
+- Primary content region text: headings (h1–h6), paragraphs, list items, blockquotes.
+- Key lists and table cell text, plus table captions.
+- Image alternative text and figure captions when images are part of the content (not purely decorative).
+- Audio/video transcripts when available.
+
+15.3 Exclusion Rules (MUST NOT)
+- Global navigation, headers/footers, cookie prompts, ads, share widgets, and comments (unless the page’s purpose is Q&A/comments).
+- Hidden/offscreen elements intended solely for navigation landmarks.
+
+15.4 Structural Treatment (SHOULD)
+- Links: include anchor text only; drop hrefs in `content`.
+- Lists: preserve order; separate items with newlines.
+- Tables: read row order; separate cells with a tab (`\t`), rows with newline. Prefix with `Table: <caption>` when present.
+- Figures/Images: include `Image: <alt>`; if a caption exists, on next line add `Caption: <text>`.
+
+15.5 Text Normalization (MUST)
+- Decode HTML entities; apply Unicode NFC.
+- Normalize line breaks to `\n`.
+- Collapse runs of horizontal whitespace to a single space within blocks.
+- Preserve a single blank line between block elements (paragraphs, lists, tables, headings).
+- Trim leading/trailing whitespace; remove zero-width and control characters except tab and newline.
+
+15.6 Hashing (MUST)
+- Compute `sourceContentHash` as: `sha256-` + Base64(SHA-256 over UTF-8 bytes of the normalized `content`).
+- Identical human content MUST yield identical `sourceContentHash` across servers for the same spec version.
+
+15.7 Versioning
+- This is Profile v1. Future spec versions MAY introduce new profiles; when adopted, generators MUST update their pipeline while preserving content parity.
 
 ---
 

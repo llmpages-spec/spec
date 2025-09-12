@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://llmpages.org/schemas/llm-page-core.schema.json#v1.0.0",
+  "$id": "https://llmpages.org/schemas/1.0.0/llm-page-core.schema.json",
   "title": "LLM Page \u2014 Core v1.0.0",
   "type": "object",
   "additionalProperties": true,

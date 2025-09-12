@@ -3,9 +3,10 @@
   "private": true,
   "devDependencies": {
     "ajv": "^8.17.1",
-    "ajv-cli": "^5.0.0"
+    "ajv-cli": "^5.0.0",
+    "ajv-formats": "^3.0.1"
   },
   "scripts": {
-    "validate": "ajv -s schemas/*.json -d examples/*.json --spec=draft2020"
+    "validate": "node tools/validate.mjs --schema=core --file=examples/core-minimal.json && node tools/validate.mjs --schema=article --file=examples/article-recommended.json && node tools/validate.mjs --schema=faq --file=examples/faq.json && node tools/validate.mjs --schema=howto --file=examples/howto.json && node tools/validate.mjs --schema=howto-faq --file=examples/howto-faq.json && node tools/validate.mjs --schema=product --file=examples/product.json"
   }
 }

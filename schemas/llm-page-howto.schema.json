@@ -1,10 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://llmpages.org/schemas/llm-page-howto.schema.json#v1.0.0",
+  "$id": "https://llmpages.org/schemas/1.0.0/llm-page-howto.schema.json",
   "title": "LLM Page \u2014 HowTo v1.0.0",
   "allOf": [
     {
-      "$ref": "https://llmpages.org/schemas/llm-page-core.schema.json#v1.0.0"
+      "$ref": "./llm-page-core.schema.json"
     },
     {
       "type": "object",

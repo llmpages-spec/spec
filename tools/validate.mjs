@@ -63,6 +63,19 @@ if (args.file === true) { console.error('Error: --file requires a value'); proce
 
   const ajv = new Ajv({ allErrors: true, strict: false });
   addFormats(ajv);
+
+  // Preload core schema so relative $ref resolves against its $id
+  if (schemaKey !== 'core') {
+    try {
+      const coreSchema = JSON.parse(
+        await fs.readFile(path.join(process.cwd(), 'schemas', 'llm-page-core.schema.json'), 'utf8')
+      );
+      ajv.addSchema(coreSchema);
+    } catch (e) {
+      console.error('Warning: could not preload core schema:', e?.message || e);
+    }
+  }
+
   const validate = ajv.compile(schema);
   const valid = validate(data);
 
@@ -87,4 +100,3 @@ main().catch((e) => {
   console.error(e);
   process.exit(2);
 });
-
